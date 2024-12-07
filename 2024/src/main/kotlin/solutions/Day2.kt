@@ -3,10 +3,14 @@ package adventofcode.solutions
 import core.AoCDay
 import kotlin.math.abs
 
-class Day2 : AoCDay(2) {
-    override fun partOne(input: String): Int {
+object Day2 : AoCDay<List<String>>(2) {
+    override fun transformInput(input: String): List<String> {
+        return input.lineSequence()
+            .toList()
+    }
+
+    override fun partOne(): Number {
         return input
-            .lineSequence()
             .map { line ->
                 val levels = line.split(" ")
                     .map { it.toInt() }
@@ -20,9 +24,8 @@ class Day2 : AoCDay(2) {
             .sum()
     }
 
-    override fun partTwo(input: String): Int {
+    override fun partTwo(): Int {
         return input
-            .lineSequence()
             .map { line ->
                 val levels = line.split(" ")
                     .map { it.toInt() }

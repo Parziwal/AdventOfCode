@@ -2,9 +2,41 @@ package adventofcode.solutions
 
 import core.AoCDay
 
-class Day5 : AoCDay(5) {
-    override fun partOne(input: String): Number {
-        val (numbersComeBefore, pageNumberSequences) = readInput(input)
+object Day5 : AoCDay<Pair<MutableMap<Int, MutableList<Int>>, MutableList<List<Int>>>>(5) {
+    override fun transformInput(input: String): Pair<MutableMap<Int, MutableList<Int>>, MutableList<List<Int>>> {
+        val numbersComeBefore = mutableMapOf<Int, MutableList<Int>>()
+        val pageNumberSequences = mutableListOf<List<Int>>()
+        var readFirstPart = true
+
+        input
+            .lineSequence()
+            .forEach { line ->
+                if (line.isEmpty()) {
+                    readFirstPart = false
+                    return@forEach
+                }
+
+                if (readFirstPart) {
+                    val (beforeNumber, afterNumber) = line.split("|")
+                        .map { it.toInt() }
+
+                    numbersComeBefore[afterNumber]?.add(beforeNumber)
+
+                    if (!numbersComeBefore.containsKey(afterNumber)) {
+                        numbersComeBefore[afterNumber] = mutableListOf(beforeNumber)
+                    }
+                } else {
+                    val pageNumbers = line.split(",")
+                        .map { it.toInt() }
+                    pageNumberSequences.add(pageNumbers)
+                }
+            }
+
+        return Pair(numbersComeBefore, pageNumberSequences)
+    }
+
+    override fun partOne(): Number {
+        val (numbersComeBefore, pageNumberSequences) = input
 
         return pageNumberSequences.map { pageNumberSequence ->
             for (i in 0..<pageNumberSequence.size - 1) {
@@ -21,8 +53,8 @@ class Day5 : AoCDay(5) {
         }.sum()
     }
 
-    override fun partTwo(input: String): Number {
-        val (numbersComeBefore, pageNumberSequences) = readInput(input)
+    override fun partTwo(): Number {
+        val (numbersComeBefore, pageNumberSequences) = input
 
         return pageNumberSequences.map { pageNumberSequence ->
             var isOrderRight = true
@@ -54,37 +86,5 @@ class Day5 : AoCDay(5) {
                 return@map 0
             }
         }.sum()
-    }
-
-    private fun readInput(input: String): Pair<MutableMap<Int, MutableList<Int>>, MutableList<List<Int>>> {
-        val numbersComeBefore = mutableMapOf<Int, MutableList<Int>>()
-        val pageNumberSequences = mutableListOf<List<Int>>()
-        var readFirstPart = true
-
-        input
-            .lineSequence()
-            .forEach { line ->
-                if (line.isEmpty()) {
-                    readFirstPart = false
-                    return@forEach
-                }
-
-                if (readFirstPart) {
-                    val (beforeNumber, afterNumber) = line.split("|")
-                        .map { it.toInt() }
-
-                    numbersComeBefore[afterNumber]?.add(beforeNumber)
-
-                    if (!numbersComeBefore.containsKey(afterNumber)) {
-                        numbersComeBefore[afterNumber] = mutableListOf(beforeNumber)
-                    }
-                } else {
-                    val pageNumbers = line.split(",")
-                        .map { it.toInt() }
-                    pageNumberSequences.add(pageNumbers)
-                }
-            }
-
-        return Pair(numbersComeBefore, pageNumberSequences)
     }
 }

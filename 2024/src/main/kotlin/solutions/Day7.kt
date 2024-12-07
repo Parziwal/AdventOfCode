@@ -5,32 +5,8 @@ import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 
-class Day7 : AoCDay(7) {
-    override fun partOne(input: String): Number {
-        val equations = readInput(input)
-
-        return equations
-            .map { equation ->
-                return@map if (equation.isSolvable(setOf(Operator.Add, Operator.Multiply)))
-                    equation.result
-                else
-                    0
-            }.sum()
-    }
-
-    override fun partTwo(input: String): Number {
-        val equations = readInput(input)
-
-        return equations
-            .map { equation ->
-                return@map if (equation.isSolvable(setOf(Operator.Add, Operator.Multiply, Operator.Concatenation)))
-                    equation.result
-                else
-                    0
-            }.sum()
-    }
-
-    private fun readInput(input: String): List<Equation> {
+object Day7 : AoCDay<List<Day7.Equation>>(7) {
+    override fun transformInput(input: String): List<Equation> {
         return input
             .lineSequence()
             .map { line ->
@@ -39,6 +15,26 @@ class Day7 : AoCDay(7) {
                     .map { it.toLong() }
                 Equation(result.toLong(), numbers)
             }.toList()
+    }
+
+    override fun partOne(): Number {
+        return input
+            .map { equation ->
+                return@map if (equation.isSolvable(setOf(Operator.Add, Operator.Multiply)))
+                    equation.result
+                else
+                    0
+            }.sum()
+    }
+
+    override fun partTwo(): Number {
+        return input
+            .map { equation ->
+                return@map if (equation.isSolvable(setOf(Operator.Add, Operator.Multiply, Operator.Concatenation)))
+                    equation.result
+                else
+                    0
+            }.sum()
     }
 
     data class Equation(val result: Long, val operands: List<Long>) {

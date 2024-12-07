@@ -3,44 +3,49 @@ package adventofcode.solutions
 import adventofcode.utils.coordinate.*
 import core.AoCDay
 
-class Day6 : AoCDay(6) {
-    override fun partOne(input: String): Number {
-        val mapOfLab = readInput(input)
-        var guardPosition = getGuardStartPosition(mapOfLab)
-        mapOfLab[guardPosition] = 'X'
+object Day6 : AoCDay<List<MutableList<Char>>>(6) {
+    override fun transformInput(input: String): List<MutableList<Char>> {
+        return input
+            .lineSequence()
+            .map { it.toMutableList() }
+            .toList()
+    }
+
+    override fun partOne(): Number {
+        var guardPosition = getGuardStartPosition(input)
+        input[guardPosition] = 'X'
 
         while (true) {
             val nextPosition = guardPosition.nextCoordinates()
-            if (nextPosition.x < 0 || nextPosition.x >= mapOfLab[0].size || nextPosition.y < 0 || nextPosition.y >= mapOfLab.size) {
+            if (nextPosition.x < 0 || nextPosition.x >= input[0].size || nextPosition.y < 0 || nextPosition.y >= input.size) {
                 break
             }
 
-            if (mapOfLab[nextPosition] == '#') {
+            if (input[nextPosition] == '#') {
                 guardPosition = guardPosition.copy(direction = guardPosition.direction.rotateRight)
             } else {
-                mapOfLab[nextPosition] = 'X'
+                input[nextPosition] = 'X'
                 guardPosition = nextPosition
             }
         }
 
-        return mapOfLab.sumOf { row ->
+        return input.sumOf { row ->
             row.count { it == 'X' }
         }
     }
 
-    override fun partTwo(input: String): Number {
-        val mapOfLab = readInput(input)
-        val guardStartPosition = getGuardStartPosition(mapOfLab)
+    override fun partTwo(): Number {
+        val guardStartPosition = getGuardStartPosition(input)
         var guardStuckCount = 0
 
-        for (i in mapOfLab.indices) {
-            for (j in mapOfLab[0].indices) {
+        for (i in input.indices) {
+            for (j in input[0].indices) {
                 if ((guardStartPosition.y == i && guardStartPosition.x == j) ||
-                    mapOfLab[i][j] == '#') {
+                    input[i][j] == '#') {
                     continue
                 }
 
-                val mapOfLabCopy = mapOfLab
+                val mapOfLabCopy = input
                     .map { it.toMutableList() }
                     .toMutableList()
                 var guardPosition = guardStartPosition.copy()
@@ -97,12 +102,5 @@ class Day6 : AoCDay(6) {
         }
 
         throw Error("Guard not found")
-    }
-
-    private fun readInput(input: String): List<MutableList<Char>> {
-        return input
-            .lineSequence()
-            .map { it.toMutableList() }
-            .toList()
     }
 }

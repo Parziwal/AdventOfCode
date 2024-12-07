@@ -1,34 +1,56 @@
 package adventofcode.core
 
 import adventofcode.solutions.*
+import core.AoCDay
 
 object AoCDaysHandler {
     private val days = listOf(
-        Day1(),
-        Day2(),
-        Day3(),
-        Day4(),
-        Day5(),
-        Day6(),
-        Day7(),
+        Day1,
+        Day2,
+        Day3,
+        Day4,
+        Day5,
+        Day6,
+        Day7,
     )
 
-    fun printDay(dayNumber: Int? = null) {
-        val choseDay = if (dayNumber != null) {
-            days.find { it.dayNumber == dayNumber } ?: throw Exception("Day not exists!")
-        } else {
-            days.last()
-        }
+    fun printDay(dayNumber: Int) {
+        printDay(days[dayNumber - 1])
+    }
 
-        choseDay.printPartOne()
-        choseDay.printPartTwo()
+    fun printLatestDay() {
+        printDay(days.last())
     }
 
     fun printAllDays() {
         days.forEach {
-            it.printPartOne()
-            it.printPartTwo()
-            println("--------------------")
+            printDay(it)
         }
+    }
+
+    private fun printDay(day: AoCDay<Any>) {
+        var exception: Exception? = null
+
+        val partOneSolution = try {
+            day.partOne().toString()
+        } catch (e: NotImplementedError) {
+            "NOT IMPLEMENTED"
+        } catch (e: Exception) {
+            exception = e
+            e.toString()
+        }
+
+        val partTwoSolution = try {
+            day.partTwo().toString()
+        } catch (e: NotImplementedError) {
+            "NOT IMPLEMENTED"
+        } catch (e: Exception) {
+            exception = e
+            e.toString()
+        }
+
+        println("Day ${day.dayNumber} |> Part One: $partOneSolution")
+        println("Day ${day.dayNumber} |> Part Two: $partTwoSolution")
+        exception?.printStackTrace()
     }
 }
