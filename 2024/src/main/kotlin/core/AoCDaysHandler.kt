@@ -13,6 +13,7 @@ object AoCDaysHandler {
         Day6,
         Day7,
         Day8,
+        Day9,
     )
 
     fun printDay(dayNumber: Int) {
@@ -41,6 +42,9 @@ object AoCDaysHandler {
             e.toString()
         }
 
+        println("Day ${day.dayNumber} |> Part One: $partOneSolution")
+        exception?.printStackTrace()
+
         val partTwoSolution = try {
             day.partTwo().toString()
         } catch (e: NotImplementedError) {
@@ -50,7 +54,6 @@ object AoCDaysHandler {
             e.toString()
         }
 
-        println("Day ${day.dayNumber} |> Part One: $partOneSolution")
         println("Day ${day.dayNumber} |> Part Two: $partTwoSolution")
         exception?.printStackTrace()
     }
