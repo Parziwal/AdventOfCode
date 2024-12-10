@@ -1,6 +1,11 @@
 package adventofcode.utils.coordinate
 
 enum class Direction {
+    None {
+        override val rotateLeft: Direction get() = None
+        override val rotateRight: Direction get() = None
+        override val opposite: Direction get() = None
+    },
     Up {
         override val rotateLeft get() = Left
         override val rotateRight get() = Right

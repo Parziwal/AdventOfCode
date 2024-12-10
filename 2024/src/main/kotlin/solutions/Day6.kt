@@ -82,6 +82,7 @@ object Day6 : AoCDay<List<MutableList<Char>>>(6) {
                                 Direction.Down -> '|'
                                 Direction.Left -> '<'
                                 Direction.Right -> '>'
+                                Direction.None -> throw Error("Direction not found")
                             }
                             guardPosition = nextPosition
                         }

@@ -9,11 +9,11 @@ operator fun <T> List<MutableList<T>>.set(coordinate: Coordinate2D, value: T) {
 }
 
 operator fun Coordinate2D.plus(other: Coordinate2D): Coordinate2D {
-    return Coordinate2D(this.x + other.x, this.y + other.y)
+    return Coordinate2D(this.x + other.x, this.y + other.y, other.direction)
 }
 
 operator fun Coordinate2D.minus(other: Coordinate2D): Coordinate2D {
-    return Coordinate2D(this.x - other.x, this.y - other.y)
+    return Coordinate2D(this.x - other.x, this.y - other.y, other.direction)
 }
 
 fun Coordinate2D.isInside(width: Int, height: Int): Boolean {
