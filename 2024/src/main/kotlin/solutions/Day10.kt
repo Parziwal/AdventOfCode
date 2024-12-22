@@ -51,7 +51,7 @@ object Day10 : AoCDay<List<List<Int>>>(10) {
         val rightCell = coordinate + Coordinate2D(1, 0, Direction.Right)
 
         if (coordinate.direction != Direction.None) {
-            if (!coordinate.isInside(input[0].size, input.size)
+            if (!coordinate.isInside(Coordinate2D(input[0].size - 1, input.size - 1))
                 || (coordinate.direction == Direction.Up && input[coordinate] - 1 != input[bottomCell])
                 || (coordinate.direction == Direction.Down && input[coordinate] - 1 != input[topCell])
                 || (coordinate.direction == Direction.Left && input[coordinate] - 1 != input[rightCell])
@@ -76,7 +76,7 @@ object Day10 : AoCDay<List<List<Int>>>(10) {
         val rightCell = coordinate + Coordinate2D(1, 0, Direction.Right)
 
         if (coordinate.direction != Direction.None) {
-            if (!coordinate.isInside(input[0].size, input.size)
+            if (!coordinate.isInside(Coordinate2D(input[0].size - 1, input.size - 1))
                 || (coordinate.direction == Direction.Up && input[coordinate] - 1 != input[bottomCell])
                 || (coordinate.direction == Direction.Down && input[coordinate] - 1 != input[topCell])
                 || (coordinate.direction == Direction.Left && input[coordinate] - 1 != input[rightCell])

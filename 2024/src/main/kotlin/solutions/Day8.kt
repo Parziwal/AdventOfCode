@@ -22,10 +22,10 @@ object Day8 : AoCDay<List<List<Char>>>(8) {
                     val antiNode1 = antennaCoordinates[i] + vector
                     val antiNode2 = antennaCoordinates[j] - vector
 
-                    if (antiNode1.isInside(input[0].size, input.size)) {
+                    if (antiNode1.isInside(Coordinate2D(input[0].size - 1, input.size - 1))) {
                         antiNodeLocations.add(antiNode1)
                     }
-                    if (antiNode2.isInside(input[0].size, input.size)) {
+                    if (antiNode2.isInside(Coordinate2D(input[0].size - 1, input.size - 1))) {
                         antiNodeLocations.add(antiNode2)
                     }
                 }
@@ -48,7 +48,7 @@ object Day8 : AoCDay<List<List<Char>>>(8) {
                     while (true) {
                         antiNodeLocations.add(antiNode)
                         antiNode += vector
-                        if (!antiNode.isInside(input[0].size, input.size)) {
+                        if (!antiNode.isInside(Coordinate2D(input[0].size - 1, input.size - 1))) {
                             break
                         }
                     }
@@ -57,7 +57,7 @@ object Day8 : AoCDay<List<List<Char>>>(8) {
                     while (true) {
                         antiNodeLocations.add(antiNode)
                         antiNode -= vector
-                        if (!antiNode.isInside(input[0].size, input.size)) {
+                        if (!antiNode.isInside(Coordinate2D(input[0].size - 1, input.size - 1))) {
                             break
                         }
                     }

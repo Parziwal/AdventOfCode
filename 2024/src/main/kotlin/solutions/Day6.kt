@@ -3,8 +3,8 @@ package adventofcode.solutions
 import adventofcode.utils.coordinate.*
 import core.AoCDay
 
-object Day6 : AoCDay<List<MutableList<Char>>>(6) {
-    override fun transformInput(input: String): List<MutableList<Char>> {
+object Day6 : AoCDay<List<List<Char>>>(6) {
+    override fun transformInput(input: String): List<List<Char>> {
         return input
             .lineSequence()
             .map { it.toMutableList() }
@@ -12,24 +12,27 @@ object Day6 : AoCDay<List<MutableList<Char>>>(6) {
     }
 
     override fun partOne(): Number {
-        var guardPosition = getGuardStartPosition(input)
-        input[guardPosition] = 'X'
+        val mapOfLab = input
+            .map { it.toMutableList() }
+            .toMutableList()
+        var guardPosition = getGuardStartPosition(mapOfLab)
+        mapOfLab[guardPosition] = 'X'
 
         while (true) {
             val nextPosition = guardPosition.nextCoordinates()
-            if (nextPosition.x < 0 || nextPosition.x >= input[0].size || nextPosition.y < 0 || nextPosition.y >= input.size) {
+            if (nextPosition.x < 0 || nextPosition.x >= mapOfLab[0].size || nextPosition.y < 0 || nextPosition.y >= mapOfLab.size) {
                 break
             }
 
-            if (input[nextPosition] == '#') {
+            if (mapOfLab[nextPosition] == '#') {
                 guardPosition = guardPosition.copy(direction = guardPosition.direction.rotateRight)
             } else {
-                input[nextPosition] = 'X'
+                mapOfLab[nextPosition] = 'X'
                 guardPosition = nextPosition
             }
         }
 
-        return input.sumOf { row ->
+        return mapOfLab.sumOf { row ->
             row.count { it == 'X' }
         }
     }
@@ -94,7 +97,7 @@ object Day6 : AoCDay<List<MutableList<Char>>>(6) {
         return guardStuckCount
     }
 
-    private fun getGuardStartPosition(mapOfLab: List<MutableList<Char>>): Coordinate2D {
+    private fun getGuardStartPosition(mapOfLab: List<List<Char>>): Coordinate2D {
         for ((rowNumber, row) in mapOfLab.withIndex()) {
             val columnNumber = row.indexOf('^')
             if (columnNumber != -1) {

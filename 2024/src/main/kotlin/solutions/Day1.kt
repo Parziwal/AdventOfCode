@@ -3,8 +3,8 @@ package adventofcode.solutions
 import core.AoCDay
 import kotlin.math.abs
 
-object Day1 : AoCDay<Pair<MutableList<Int>, MutableList<Int>>>(1) {
-    override fun transformInput(input: String): Pair<MutableList<Int>, MutableList<Int>> {
+object Day1 : AoCDay<Pair<List<Int>, List<Int>>>(1) {
+    override fun transformInput(input: String): Pair<List<Int>, List<Int>> {
         val leftList = mutableListOf<Int>()
         val rightList = mutableListOf<Int>()
 
@@ -17,7 +17,9 @@ object Day1 : AoCDay<Pair<MutableList<Int>, MutableList<Int>>>(1) {
     }
 
     override fun partOne(): Number {
-        val (leftList, rightList) = input
+        val (leftList, rightList) = input.let {
+            Pair(it.first.toMutableList(), it.second.toMutableList())
+        }
 
         leftList.sort()
         rightList.sort()
@@ -31,7 +33,9 @@ object Day1 : AoCDay<Pair<MutableList<Int>, MutableList<Int>>>(1) {
     }
 
     override fun partTwo(): Number {
-        val (leftList, rightList) = input
+        val (leftList, rightList) = input.let {
+            Pair(it.first.toMutableList(), it.second.toMutableList())
+        }
 
         val locationIdOccurrencesInLeftList = rightList
             .groupingBy { id -> id }
