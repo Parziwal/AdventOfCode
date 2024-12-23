@@ -38,6 +38,16 @@ operator fun Coordinate2D.minus(other: Coordinate2D): Coordinate2D {
     return Coordinate2D(this.x - other.x, this.y - other.y, other.direction)
 }
 
+operator fun Coordinate2D.minus(dir: Direction): Coordinate2D {
+    return when(dir) {
+        Direction.Up -> this - Coordinate2D(0, -1, dir)
+        Direction.Down -> this - Coordinate2D(0, 1, dir)
+        Direction.Left -> this - Coordinate2D(-1, 0, dir)
+        Direction.Right -> this - Coordinate2D(1, 0, dir)
+        Direction.None -> this
+    }
+}
+
 operator fun Coordinate2D.minus(value: Int): Coordinate2D {
     return this.copy(x = this.x - value, y = this.y - value)
 }
