@@ -1,8 +1,6 @@
 package adventofcode.solutions
 
 import adventofcode.utils.coordinate.*
-import adventofcode.utils.graph.astar.GraphSearchResult
-import adventofcode.utils.graph.astar.VertexWrapper
 import adventofcode.utils.graph.astar.aStarShortestPath
 import core.AoCDay
 
