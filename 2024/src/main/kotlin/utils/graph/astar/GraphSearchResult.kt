@@ -10,6 +10,7 @@ class GraphSearchResult<T>(
     fun getScore() = end?.let { getScore(it) } ?: throw IllegalStateException("No path found")
     fun getScore(vertex: T) = result[vertex]?.cost ?: throw IllegalStateException("Result for $vertex not available")
     fun getPath() = end?.let { getPath(it, emptyList()) } ?: throw IllegalStateException("No path found")
+    fun getPath(vertex: T) = getPath(vertex, emptyList())
     fun getPossiblePaths() = end?.let { unpackPossiblePaths(it, possiblePaths).toList() } ?: throw IllegalStateException("No path found")
 
     private tailrec fun getPath(endVertex: T, pathEnd: List<T>): List<T> {

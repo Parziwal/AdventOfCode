@@ -1,5 +1,7 @@
 package adventofcode.utils.coordinate
 
+import kotlin.math.abs
+
 operator fun <T> List<List<T>>.get(coordinate: Coordinate2D): T {
     return this[coordinate.y][coordinate.x]
 }
@@ -62,4 +64,8 @@ operator fun Coordinate2D.div(divisor: Int): Coordinate2D {
 
 fun Coordinate2D.isInside(size: Coordinate2D, offset: Coordinate2D = Coordinate2D(0, 0)): Boolean {
     return this.x >= offset.x && this.y >= offset.y && this.x <= offset.x + size.x && this.y <= offset.y + size.y
+}
+
+fun Coordinate2D.abs(): Int {
+    return abs(this.x) + abs(this.y)
 }

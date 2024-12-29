@@ -12,6 +12,18 @@ typealias HeuristicFunction<T> = (T) -> Int
 typealias NeighbourFunction<T> = (T) -> Iterable<T>
 typealias CostFunction<T> = (T, T) -> Int
 
+/**
+ * Dijkstra's algorithm to get the shortest path from a starting vertex to all reachable vertices
+ */
+fun <T> shortestPathToAll(
+    start: T,
+    neighbours: NeighbourFunction<T>,
+    cost: CostFunction<T> = { _, _ -> 1 }
+): GraphSearchResult<T> = aStarShortestPath(start, { false }, neighbours, cost)
+
+/**
+ * A* search to find the shortest path between two vertices
+ */
 fun <T>aStarShortestPath(
     startVertex: T,
     endPredicate: (T) -> Boolean,
