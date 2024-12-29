@@ -23,6 +23,7 @@ object AoCDaysHandler {
         Day16,
         Day17,
         Day18,
+        Day19,
     )
 
     fun printDay(dayNumber: Int) {
