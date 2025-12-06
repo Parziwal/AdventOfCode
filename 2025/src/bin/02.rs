@@ -9,14 +9,15 @@ struct ProductIdRange {
 
 impl ProductIdRange {
     fn from_string(string: &str) -> ProductIdRange {
-        let (first_id, last_id) = string
-            .split_once('-')
-            .unwrap();
+        let (first_id, last_id) = string.split_once('-').unwrap();
 
         let first_id: u64 = first_id.parse().unwrap();
         let last_id: u64 = last_id.parse().unwrap();
 
-        ProductIdRange { start: first_id, end: last_id }
+        ProductIdRange {
+            start: first_id,
+            end: last_id,
+        }
     }
 }
 
@@ -43,7 +44,7 @@ fn sum_invalid_ids_for_times(id_range: &ProductIdRange, repeat_times: usize) -> 
     let mut invalid_ids = HashSet::new();
 
     let len = num_digits(id_range.start);
-    let mut repeat_part_len = (len + repeat_times - 1) / repeat_times;
+    let mut repeat_part_len = len.div_ceil(repeat_times);
 
     let mut repeat_part = if repeat_part_len * repeat_times != len {
         10_u64.pow((repeat_part_len - 1) as u32)
@@ -63,7 +64,6 @@ fn sum_invalid_ids_for_times(id_range: &ProductIdRange, repeat_times: usize) -> 
         if num_digits(repeat_part) != num_digits(repeat_part + 1) {
             repeat_part_len += 1;
             repeat_part = 10_u64.pow((repeat_part_len - 1) as u32)
-
         } else {
             repeat_part += 1;
         }
@@ -76,10 +76,7 @@ pub fn part_one(input: &str) -> Option<u64> {
     let invalid_ids_sum = input
         .split(',')
         .map(ProductIdRange::from_string)
-        .map(|ranges| {
-            sum_invalid_ids_for_times(&ranges, 2)
-                .iter().sum::<u64>()
-        })
+        .map(|ranges| sum_invalid_ids_for_times(&ranges, 2).iter().sum::<u64>())
         .sum();
 
     Some(invalid_ids_sum)
@@ -92,7 +89,8 @@ pub fn part_two(input: &str) -> Option<u64> {
             (2..=num_digits(ranges.end))
                 .flat_map(|time| sum_invalid_ids_for_times(&ranges, time))
                 .collect::<HashSet<u64>>()
-                .iter().sum::<u64>()
+                .iter()
+                .sum::<u64>()
         })
         .sum();
 
